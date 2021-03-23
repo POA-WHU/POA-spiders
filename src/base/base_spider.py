@@ -3,6 +3,7 @@ BaseSpider定义文件
 """
 
 from abc import ABC, abstractmethod
+from typing import Union
 
 from .base_url_manager import BaseURLManager
 from .utilities import *
@@ -56,13 +57,14 @@ class BaseSpider(ABC):
                 self._logger.error(e)
                 continue
             # 将结果写入数据库
-            self.dl.insert(atc)
-            cnt += 1
+            if atc is not None:
+                self.dl.insert(atc)
+                cnt += 1
 
         self._logger.debug('Done')
 
     @abstractmethod
-    def parse(self, url) -> Article:
+    def parse(self, url) -> Union[Article, None]:
         """
         :param url: 文档url
         :return: Article
