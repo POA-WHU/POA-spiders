@@ -6,10 +6,8 @@ from random import choice
 from json import load, dumps
 from warnings import simplefilter
 from urllib.request import getproxies
-import logging
 
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from requests import get, Session
+from requests import Session
 
 
 
@@ -23,9 +21,8 @@ def get_html(url: str, headers_args: dict = None) -> bytes:
     """
     # 初次使用，配置session
     if not hasattr(get_html, 'session'):
-        simplefilter('ignore', InsecureRequestWarning)
         # with open('base\\utilities\\user_agents.json', 'r') as f:
-        with open('base\\utilities\\user_agents.json', 'r') as f:
+        with open('src\\base\\utilities\\user_agents.json', 'r') as f:
             ua = choice(load(f)['user-agents'])
         headers = {'user-agent': ua}
         if headers_args is not None:
@@ -60,7 +57,6 @@ def post_html(url: str, data, headers_args: dict = None) -> bytes:
     """
     # 初次使用，配置session
     if not hasattr(post_html, 'session'):
-        simplefilter('ignore', InsecureRequestWarning)
         with open('base\\utilities\\user_agents.json', 'r') as f:
             ua = choice(load(f)['user-agents'])
         headers = {'user-agent': ua}
@@ -75,3 +71,6 @@ def post_html(url: str, data, headers_args: dict = None) -> bytes:
         proxies['https'] = proxies['https'].replace('s', '')
     html = get_html.session.post(url, proxies=proxies, data=dumps(data)).content
     return html
+
+if __name__ == '__main__':
+    get_html('111')
