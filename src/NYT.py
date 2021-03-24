@@ -3,8 +3,8 @@ from base64 import b64encode
 
 from bs4 import BeautifulSoup
 
-from base import *
-from db_info import *
+from src.base import *
+from src.db_info import *
 
 # 构建映射url->article
 _url2atc = dict()
