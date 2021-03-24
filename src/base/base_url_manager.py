@@ -5,7 +5,7 @@ BaseURLManager定义文件
 from threading import Thread
 from abc import ABC, abstractmethod
 
-from .utilities import get_logger
+from .utilities import Logger
 
 
 class BaseURLManager(ABC):
@@ -20,7 +20,7 @@ class BaseURLManager(ABC):
         :param start_page:开始目录页码
         :param end_page:结束目录页码, 默认为无穷
         """
-        self._logger = get_logger(self.__class__.__name__)
+        self._logger = Logger(self.__class__.__name__)
         self.start_page = start_page
         self.end_page = end_page
         # url队列
