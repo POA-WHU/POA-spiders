@@ -56,7 +56,6 @@ class BaseSpider(ABC):
             except Exception as e:
                 self._logger.error(e)
                 continue
-            # 将结果写入数据库
             if atc is not None:
                 self.dl.insert(atc)
                 cnt += 1
