@@ -21,7 +21,7 @@ class BaseSpider(ABC):
         :param url_manager: URL管理器
         :param maximum: 爬取的最大文章数，默认为无穷
         """
-        self._logger = get_logger(self.__class__.__name__)
+        self._logger = Logger(self.__class__.__name__)
         self.maximum = maximum
         self._url_manage = url_manager
         self.dl = DataLoader(server, database)

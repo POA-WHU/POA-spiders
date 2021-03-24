@@ -17,17 +17,3 @@ Inherit `BaseURLManager` and `BaseSpider` from `base` package, then overwrite th
 
 `BaseSpider.parse()` receives a document url and returns useful content on that document page.
 
-## TODO list
-
-### Rand
- - [x] blog handler
- - [ ] brochure handler
- - [ ] commentary handler
- - [ ] journal article handler
- - [ ] multimedia handler
- - [ ] news release handler
- - [ ] report handler
- - [ ] testimony handler
- - [x] have a good sleep😴
-### CNN
- - [ ] Optimize searching strategy

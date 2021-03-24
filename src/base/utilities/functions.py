@@ -11,8 +11,7 @@ import logging
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from requests import get, Session
 
-_FORMAT = '[%(name)-10s] %(levelname)-8s: %(message)s'
-_LEVEL = logging.DEBUG
+
 
 
 def get_html(url: str, headers_args: dict = None) -> bytes:
@@ -49,20 +48,6 @@ def letters(str_: str) -> str:
     :return: 过滤后的字符串
     """
     return ''.join(filter(str.isalpha, str_))
-
-
-def get_logger(name) -> logging.Logger:
-    """
-    获取logger
-    :param name: logger名称
-    """
-    formatter = logging.Formatter(fmt=_FORMAT)
-    handler = logging.StreamHandler()
-    handler.setFormatter(formatter)
-    logger = logging.getLogger(name)
-    logger.addHandler(handler)
-    logger.setLevel(_LEVEL)
-    return logger
 
 
 def post_html(url: str, data, headers_args: dict = None) -> bytes:
