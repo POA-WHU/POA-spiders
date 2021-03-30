@@ -22,10 +22,7 @@ def get_html(url: str, headers_args: dict = None) -> bytes:
     # 初次使用，配置session
     if not hasattr(get_html, 'session'):
         # with open('base\\utilities\\user_agents.json', 'r') as f:
-<<<<<<< HEAD
-=======
-        with open('src\\base\\utilities\\user_agents.json', 'r') as f:
->>>>>>> dd641abc70265d5d0f5ce283bc36dbf2884f3d8a
+        with open('base\\utilities\\user_agents.json', 'r') as f:
             ua = choice(load(f)['user-agents'])
         headers = {'user-agent': ua}
         if headers_args is not None:
@@ -50,12 +47,13 @@ def letters(str_: str) -> str:
     return ''.join(filter(str.isalpha, str_))
 
 
-def post_html(url: str, data, headers_args: dict = None) -> bytes:
+def post_html(url: str, data, headers_args: dict = None, is_json = True) -> bytes:
     """
     发送post请求并接收response
     :param url: request的url字符串
     :param data: request的body文件
     :param headers_args: 请求头附加参数
+    :param is_json: request的body文件是json格式
     :return:
     """
     # 初次使用，配置session
@@ -72,7 +70,10 @@ def post_html(url: str, data, headers_args: dict = None) -> bytes:
     proxies = getproxies()
     if 'https' in proxies.keys():
         proxies['https'] = proxies['https'].replace('s', '')
-    html = get_html.session.post(url, proxies=proxies, data=dumps(data)).content
+    if is_json is True:
+        html = get_html.session.post(url, proxies=proxies, data=dumps(data)).content
+    else:
+        html = get_html.session.post(url, proxies=proxies, data=data).content
     return html
 
 if __name__ == '__main__':
