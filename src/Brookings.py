@@ -2,7 +2,6 @@ from sytk import EzParser
 import json
 
 from base import *
-from db_info import *
 
 
 class BrookingsURLManager(BaseURLManager):
@@ -78,7 +77,5 @@ class BrookinsSpider(BaseSpider):
 
 if __name__ == '__main__':
     BrookinsSpider(
-        server=SERVER,
-        database=DATABASE,
         url_manager=BrookingsURLManager()
     ).run()

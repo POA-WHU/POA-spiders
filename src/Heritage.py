@@ -2,8 +2,7 @@ from json import loads
 
 from bs4 import BeautifulSoup
 
-from src.base import *
-from src.db_info import *
+from base import *
 
 # 构建映射url->article
 _url2atc = dict()
@@ -64,8 +63,8 @@ class HRTURLManager(BaseURLManager):
 
 
 class HRTSpider(BaseSpider):
-    def __init__(self, server: str, database: str, url_manager: BaseURLManager, maximum=-1):
-        super().__init__(server, database, url_manager, maximum)
+    def __init__(self, url_manager: BaseURLManager, maximum=-1):
+        super().__init__(url_manager, maximum)
 
     def parse(self, url) -> Article:
         html = get_html(url)
@@ -100,8 +99,6 @@ class HRTSpider(BaseSpider):
 if __name__ == '__main__':
     um = HRTURLManager()
     spider = HRTSpider(
-        server=SERVER,
-        database=DATABASE,
         url_manager=um,
     )
 

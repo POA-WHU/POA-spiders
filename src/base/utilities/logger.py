@@ -1,15 +1,14 @@
 import logging
-
-_FORMAT = '[%(name)-10s] %(levelname)-8s: %(message)s'
-_LEVEL = logging.DEBUG
+from config import Log
 
 
 class Logger(logging.Logger):
     def __init__(self, name: str):
+        config = Log()
         super().__init__(name)
-        formatter = logging.Formatter(fmt=_FORMAT)
+        formatter = logging.Formatter(fmt=config.format)
         handler = logging.StreamHandler()
         handler.setFormatter(formatter)
-        handler.setLevel(_LEVEL)
+        handler.setLevel(config.level)
         self.addHandler(handler)
-        self.setLevel(_LEVEL)
+        self.setLevel(config.level)

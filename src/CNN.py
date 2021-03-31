@@ -3,7 +3,6 @@ from json import loads
 from bs4 import BeautifulSoup
 
 from base import *
-from db_info import *
 
 # 构建映射url->article
 _url2atc = dict()
@@ -46,8 +45,8 @@ class CNNURLManager(BaseURLManager):
 
 
 class CNNSpider(BaseSpider):
-    def __init__(self, server: str, database: str, url_manager: BaseURLManager, maximum=-1):
-        super().__init__(server, database, url_manager, maximum)
+    def __init__(self, url_manager: BaseURLManager, maximum=-1):
+        super().__init__(url_manager, maximum)
 
     def parse(self, url) -> Article:
         html = get_html(url)
@@ -67,8 +66,6 @@ class CNNSpider(BaseSpider):
 if __name__ == '__main__':
     um = CNNURLManager()
     spider = CNNSpider(
-        server=SERVER,
-        database=DATABASE,
         url_manager=um,
     )
 

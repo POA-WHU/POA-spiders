@@ -2,11 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import ProgrammingError, OperationalError, DataError
 from sqlalchemy.orm import sessionmaker
 
-from .logger import Logger
+from ..logger import Logger
 from .models import *
 
 
-class DataLoader:
+class DBHandler:
     def __init__(self, server: str, database: str):
         self._logger = Logger(self.__class__.__name__)
         engine = create_engine(server)

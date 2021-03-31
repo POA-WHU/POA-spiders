@@ -4,11 +4,28 @@
 
 from random import choice
 from json import load, dumps
-from warnings import simplefilter
 from urllib.request import getproxies
 
 from requests import Session
+from pdfminer.high_level import extract_text
 
+from config import user_agents_path
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+def pdf2text(pdf_path: str) -> str:
+    """提取PDF文件中的字符串
+
+    Args:
+        pdf_path (str): PDF文件的存储路径
+
+    Returns:
+        str: 提取出的字符串
+    """
+    with open(pdf_path, 'rb') as f:
+        return extract_text(f)
 
 
 
@@ -22,7 +39,7 @@ def get_html(url: str, headers_args: dict = None) -> bytes:
     # 初次使用，配置session
     if not hasattr(get_html, 'session'):
         # with open('base\\utilities\\user_agents.json', 'r') as f:
-        with open('base\\utilities\\user_agents.json', 'r') as f:
+        with open(user_agents_path, 'r') as f:
             ua = choice(load(f)['user-agents'])
         headers = {'user-agent': ua}
         if headers_args is not None:
@@ -58,7 +75,7 @@ def post_html(url: str, data, headers_args: dict = None, is_json = True) -> byte
     """
     # 初次使用，配置session
     if not hasattr(post_html, 'session'):
-        with open('base\\utilities\\user_agents.json', 'r') as f:
+        with open(user_agents_path, 'r') as f:
             ua = choice(load(f)['user-agents'])
         headers = {'user-agent': ua}
         if headers_args is not None:
@@ -75,6 +92,3 @@ def post_html(url: str, data, headers_args: dict = None, is_json = True) -> byte
     else:
         html = get_html.session.post(url, proxies=proxies, data=data).content
     return html
-
-if __name__ == '__main__':
-    get_html('111')

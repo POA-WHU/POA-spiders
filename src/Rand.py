@@ -3,7 +3,6 @@ from os import mkdir
 from bs4 import BeautifulSoup
 
 from base import *
-from db_info import *
 
 _url2atc = dict()
 month = dict({'Jan':1, 'Feb':2, 'Mar':3, 'Apr':4, 'May':5, 'Jun':6,
@@ -301,8 +300,8 @@ def Dissertation_parse(atc:Article, soup:BeautifulSoup):
 
 class RandSpider(BaseSpider):
 
-    def __init__(self, server: str, database: str, url_manager: BaseURLManager, maximum=-1):
-        super().__init__(server, database, url_manager, maximum)
+    def __init__(self, url_manager: BaseURLManager, maximum=-1):
+        super().__init__(url_manager, maximum)
 
     def parse(self, url) -> Article:
         html = get_html(url)
@@ -331,8 +330,6 @@ class RandSpider(BaseSpider):
 if __name__ == '__main__':
     um = RandURLManager()
     spider = RandSpider(
-        server=SERVER,
-        database=DATABASE,
         url_manager=um,
     )
     spider.run()

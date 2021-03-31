@@ -3,8 +3,7 @@ from base64 import b64encode
 
 from bs4 import BeautifulSoup
 
-from src.base import *
-from src.db_info import *
+from base import *
 
 # 构建映射url->article
 _url2atc = dict()
@@ -103,7 +102,5 @@ class NYTSpider(BaseSpider):
 
 if __name__ == '__main__':
     NYTSpider(
-        server=SERVER,
-        database=DATABASE,
         url_manager=NYTURLManager(),
     ).run()

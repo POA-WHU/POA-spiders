@@ -5,6 +5,7 @@ BaseSpider定义文件
 from abc import ABC, abstractmethod
 from typing import Union
 
+from config import Database
 from .base_url_manager import BaseURLManager
 from .utilities import *
 
@@ -14,7 +15,7 @@ class BaseSpider(ABC):
     从URLManager处获取url并解析，将内容存储到本地
     """
 
-    def __init__(self, server: str, database: str, url_manager: BaseURLManager, maximum=-1):
+    def __init__(self, url_manager: BaseURLManager, maximum=-1):
         """
         :param server: mysql服务器
         :param database: 数据库名称
@@ -24,7 +25,8 @@ class BaseSpider(ABC):
         self._logger = Logger(self.__class__.__name__)
         self.maximum = maximum
         self._url_manage = url_manager
-        self.dl = DataLoader(server, database)
+        db = Database()
+        self.db_handler = DBHandler(db.server, db.database)
 
     def run(self):
         self._logger.debug('Started running')
@@ -57,7 +59,7 @@ class BaseSpider(ABC):
                 self._logger.error(e)
                 continue
             if atc is not None:
-                self.dl.insert(atc)
+                self.db_handler.insert(atc)
                 cnt += 1
 
         self._logger.debug('Done')
