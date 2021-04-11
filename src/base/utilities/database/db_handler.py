@@ -31,3 +31,13 @@ class DBHandler:
         except DataError:
             self._logger.error('data error', exc_info=True)
         self._logger.debug(f'insertion finished successfully')
+    
+    def transform_all_pdf(self):
+        session = self._Session()
+        items = session.query(Article).filter(Article.type=='pdf').all()
+        texts = yield [i.content for i in items]
+        for i, j in zip(items, texts):
+            self._logger.debug(f'Processing {i} with text: {j}')
+            i.content = j
+        self._logger.debug('Done')
+        session.commit()

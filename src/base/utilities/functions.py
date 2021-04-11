@@ -5,28 +5,34 @@
 from random import choice
 from json import load, dumps
 from urllib.request import getproxies
+import pikepdf
 
 from requests import Session
 from pdfminer.high_level import extract_text
 
-from config import user_agents_path
+from config import user_agents_path, temp_pdf_path
+from base.utilities.logger import Logger
 
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-def pdf2text(pdf_path: str) -> str:
+def pdf2text(pdf_url: str) -> str:
     """提取PDF文件中的字符串
 
     Args:
-        pdf_path (str): PDF文件的存储路径
+        pdf_url (str): PDF文件的下载地址
 
     Returns:
         str: 提取出的字符串
     """
-    with open(pdf_path, 'rb') as f:
-        return extract_text(f)
-
+    Logger(pdf2text.__name__).debug(f'new pdf url: {pdf_url}')
+    with open(temp_pdf_path, 'wb') as f:
+        f.write(get_html(pdf_url))
+    pikepdf.open(temp_pdf_path, allow_overwriting_input=True).save(temp_pdf_path)
+    with open(temp_pdf_path, 'rb') as f:
+        text = extract_text(f)
+    return text
 
 
 def get_html(url: str, headers_args: dict = None) -> bytes:

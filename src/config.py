@@ -20,3 +20,4 @@ class Log:
 
 
 user_agents_path = project_path / 'src/base/utilities/user_agents.json'
+temp_pdf_path = project_path / 'src/temp.pdf'
