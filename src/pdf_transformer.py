@@ -17,7 +17,6 @@ class PDFTransformer:
             gen.send(texts)
         except StopIteration:
             pass
-        pass
 
 
 if __name__ == '__main__':
