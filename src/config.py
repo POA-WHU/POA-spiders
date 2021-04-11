@@ -1,10 +1,8 @@
-from dataclasses import dataclass
 from pathlib import Path
 
 project_path = Path(__file__).absolute().parent.parent
 
 
-@dataclass
 class Database:
     user = 'root'
     password = ''
@@ -12,12 +10,10 @@ class Database:
     port = '3306'
     database = 'test_db'
 
-    @property
-    def server(self):
-        return f'mysql+pymysql://{self.user}:{self.password}@{self.host}:{self.port}'
+    server = f'mysql+pymysql://{user}:{password}@{host}:{port}'
 
 
-@dataclass
+
 class Log:
     format = '[%(name)-10s] %(levelname)-8s: %(message)s'
     level = 'DEBUG'

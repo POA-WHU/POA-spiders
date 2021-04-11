@@ -6,8 +6,8 @@ from abc import ABC, abstractmethod
 from typing import Union
 
 from config import Database
-from .base_url_manager import BaseURLManager
-from .utilities import *
+from base.base_url_manager import BaseURLManager
+from base.utilities import *
 
 
 class BaseSpider(ABC):
@@ -25,8 +25,7 @@ class BaseSpider(ABC):
         self._logger = Logger(self.__class__.__name__)
         self.maximum = maximum
         self._url_manage = url_manager
-        db = Database()
-        self.db_handler = DBHandler(db.server, db.database)
+        self.db_handler = DBHandler(Database.server, Database.database)
 
     def run(self):
         self._logger.debug('Started running')

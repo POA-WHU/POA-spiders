@@ -2,8 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import ProgrammingError, OperationalError, DataError
 from sqlalchemy.orm import sessionmaker
 
-from ..logger import Logger
-from .models import *
+from base.utilities.logger import Logger
+from base.utilities.database.models import Base, Article
 
 
 class DBHandler:

@@ -4,11 +4,10 @@ from config import Log
 
 class Logger(logging.Logger):
     def __init__(self, name: str):
-        config = Log()
         super().__init__(name)
-        formatter = logging.Formatter(fmt=config.format)
+        formatter = logging.Formatter(fmt=Log.format)
         handler = logging.StreamHandler()
         handler.setFormatter(formatter)
-        handler.setLevel(config.level)
+        handler.setLevel(Log.level)
         self.addHandler(handler)
-        self.setLevel(config.level)
+        self.setLevel(Log.level)
